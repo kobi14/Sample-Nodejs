@@ -1,19 +1,28 @@
 const http=require('http');
+
 const fs=require('fs');
 
-// const hostname='127.0.0.1';
-// const port=3000;
+//include express framework module 
+const express=require('express');
+
+//mysql module
+const mysql=require('mysql');
+
+
+
+const app =express();
 
 
 //html file reading 
 
-fs.readFile('index.html',(err,html)=>{
+
+	fs.readFile('index.html',(err,html)=>{
 	if(err){
 		throw err;
 
 	}
 
-	const server=http.createServer((req, res)=> {
+		app.get('/',(req,res)=> {
 		res.statusCode=200;
 		res.setHeader('Content-type','text/html');
 		res.write(html);
@@ -22,20 +31,9 @@ fs.readFile('index.html',(err,html)=>{
 
 
 
-	});
-
-	// server.listen(port,hostname,()=>{
-	// 	console.log('Server started on port'+port);
-	// });
-
+	})
 
 });
-
-
-
-
-const express=require('express');
-const mysql=require('mysql');
 
 //Create a connection 
 const db =mysql.createConnection({
@@ -58,7 +56,7 @@ db.connect((err)=>{
 
 })
 
-const app =express();
+
 
 //Create table
 
@@ -79,4 +77,5 @@ app.get('/create',(req,res)=>{
 app.listen('3000',()=>{
 	console.log('Server started');
 })
+
 
